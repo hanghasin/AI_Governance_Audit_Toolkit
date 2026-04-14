@@ -16,7 +16,7 @@ jobs:
         python-version: '3.9'
 
     - name: "3. Install Audit Dependencies"
-      run: pip install pandas sqlite3
+      run: pip install pandas
 
     - name: "4. Execute Data Pipeline"
       run: |
