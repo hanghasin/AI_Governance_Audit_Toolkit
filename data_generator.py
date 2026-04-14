@@ -22,7 +22,7 @@ def generate_booking_data(num_records=1000):
         # BIAS LOGIC (The "Audit Target"): 
         # AI overcharges premium device users by 15% (Proxy Discrimination)
         if device in ['Mac', 'iPhone']:
-            final_price = base_price * 1.15
+            final_price = base_price * 1.05
         else:
             final_price = base_price
             
