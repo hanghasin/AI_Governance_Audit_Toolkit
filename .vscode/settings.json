@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:AI_Governance_Audit_Toolkit}/audit.db",
+            "name": "bookings"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
