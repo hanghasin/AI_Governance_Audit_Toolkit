@@ -21,7 +21,7 @@ jobs:
     - name: "4. Execute Data Pipeline"
       run: |
         python3 data_generator.py 
-        python3 -c "import pandas as pd; import sqlite3; df = pd.read_csv('booking_logs_mock.csv'); conn = sqlite3.connect('audit.db'); df.to_sql('bookings', conn, index=False)"
+        python3 -c "import pandas as pd; import sqlite3; df = pd.read_csv('booking_logs_mock.csv'); conn = sqlite3.connect('audit.db'); df.to_sql('bookings', conn, index=False, if_exists='replace')"
 
     - name: "5. Compliance Gate: Bias Threshold Check"
       run: |
