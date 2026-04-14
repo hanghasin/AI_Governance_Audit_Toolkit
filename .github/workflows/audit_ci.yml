@@ -1,31 +1,28 @@
 name: AI Governance Continuous Audit
 
-on: [push] # Automatically triggers on every 'git push'
+on: [push]
 
 jobs:
   bias-audit-gate:
     runs-on: ubuntu-latest
     
     steps:
-    - name: 1. Checkout repository
+    - name: "1. Checkout repository"
       uses: actions/checkout@v3
 
-    - name: 2. Setup Python environment
+    - name: "2. Setup Python environment"
       uses: actions/setup-python@v4
       with:
         python-version: '3.9'
 
-    - name: 3. Install Audit Dependencies
+    - name: "3. Install Audit Dependencies"
       run: pip install pandas sqlite3
 
-    - name: 4. Execute Data Pipeline
+    - name: "4. Execute Data Pipeline"
       run: |
-        # Re-generate fresh mock data
         python3 data_generator.py 
-        # Convert CSV to SQL Audit Database
         python3 -c "import pandas as pd; import sqlite3; df = pd.read_csv('booking_logs_mock.csv'); conn = sqlite3.connect('audit.db'); df.to_sql('bookings', conn, index=False)"
 
-    - name: 5. Compliance Gate: Bias Threshold Check
+    - name: "5. Compliance Gate: Bias Threshold Check"
       run: |
-        # This is the "Redline." If iPhone markup > 10%, the build fails.
         python3 -c "import sqlite3; conn = sqlite3.connect('audit.db'); cur = conn.cursor(); cur.execute('SELECT AVG(final_price)/AVG(base_price) FROM bookings WHERE device_type=\"iPhone\"'); ratio = cur.fetchone()[0]; print(f'Current Bias Ratio: {ratio}'); exit(1 if ratio > 1.10 else 0)"
